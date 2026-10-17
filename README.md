@@ -6,8 +6,11 @@ A mobile-friendly personal dashboard powered by your existing Supabase project.
 - Sign in with Google (Supabase Auth, PKCE)
 - Create and list private projects
 - Create, complete, reopen and delete tasks
-- Live task counts and calculated project progress
-- Dark-mode-first desktop/mobile layout
+- Today: up to three suggested tasks from active projects, ranked by overdue/today, work started, priority, and due date
+- Project cards with completed counts, progress bars, and the next actionable task
+- Saved project milestones with task assignment, automatic progress, and milestone filtering
+- Live task counts and completion feedback
+- Light, responsive workspace with project cards and task filters
 - Database RLS protects reads and writes
 
 ## Run locally
@@ -69,3 +72,13 @@ consent, and RLS-restricted tool call succeeds.**
 From the web project folder, run `node scripts/check-mcp.mjs`. This sends only
 unauthenticated requests and expects an HTTP 401 plus public OAuth discovery.
 It does not test the signed-in tools or execute any data mutations.
+
+## Follow your progress
+
+- **Today** suggests up to three tasks from active projects. Overdue and due-today work appears first; completed and blocked tasks are excluded from suggestions. Undated tasks can appear as suggested focus. Dates follow your device’s local calendar.
+- Open a project and choose **Add milestone** to create stages such as Research, Book, and Get ready.
+- Assign existing tasks using the milestone menu beside each task, or choose a milestone when adding a task. Click a milestone card to filter its tasks; **Show all tasks** clears the filter.
+- A milestone is complete when it has at least one task and every linked task is done. Empty milestones start at 0%.
+- Milestones persist in Supabase and follow the existing project membership permissions. The applied schema change is recorded in `supabase/migrations/20261017135843_project_milestones.sql`. Apply it to any separate database before running this version of the app. Existing tasks are left unassigned.
+
+Run `npm test` for progress/date ordering checks, `npm run typecheck` for TypeScript, and `npm run build` for the production build.
